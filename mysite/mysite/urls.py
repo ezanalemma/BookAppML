@@ -15,8 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from register import views as v
 
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
+    path('home/', include('home.urls')),
+    path('register/', v.register, name="register"),
 ]
+
+# urlpatterns += [
+#     path('', RedirectView.as_view(url='home/', permanent=True)),
+# ]
+
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

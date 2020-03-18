@@ -1,0 +1,29 @@
+{% extends "base_layout.html" %}
+
+{% block content %}
+		<div class="sidenav">
+			<a href="{% url 'index' %}">Home</a>
+			<a href="/polls">Polls</a>
+			<a href="/register"> Sign up</a>
+		</div>
+	 	{% load static %}
+		<p style="text-align:center">Your next book package is arriving January 1st!</p>
+		<div class="imgContainer">
+			<div>
+				<img src="{% static '../../static/hp.jpg'%}" alt="">	
+			</div>
+
+			<div class="imgButton">
+                <input type="button" class="button" value="Recommend New Book">
+            </div>
+		
+			<div class="imgButton">
+                <input type="button" class="button" value="Cancel Subscription">
+            </div>
+ 		</div>
+{% endblock %}
+
+
+            
+
+            
