@@ -1,14 +1,27 @@
+
+
+
+
 {% extends "base_layout.html" %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 
 {% block content %}
+
 	{% if latest_question_list %}
-	    <ul>
-	    {% for question in latest_question_list %}
-	        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
-	    {% endfor %}
-	    </ul>
-	{% else %}
-	    <p>No polls are available.</p>
-	{% endif %}
+	<div class="sidenav">
+			<a href="{% url 'index' %}">Home</a>
+			<a href="/polls">Polls</a>
+			<a href="/register"> Sign up</a>
+		</div>
+		<h1 style="text-align:center" >Survey Quesitons</h1>
+	    	<ul>
+	    	{% for question in latest_question_list %}
+	    	    <li style="text-align:center"><a href="{% url 'polls:detail' question.id %}">{{question.question_text }}</a></li>
+	    	{% endfor %}
+	    	</ul>
+		{% else %}
+	    	<p>No polls are available.</p>
+		{% endif %}
 
 {% endblock %}

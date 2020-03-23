@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('home.urls')),
     path('register/', v.register, name="register"),
+    # path('views/', include('home.urls')),
 ]
 
 # urlpatterns += [

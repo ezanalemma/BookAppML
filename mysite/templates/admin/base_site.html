@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		{% load static %}
-		<link rel="stylesheet" type="text/css" href="{% static 'home/homestyle.css' %}">
-	</head>
-	<body>
-		<div class="wrapper">
-			{% block content %}
-			{% endblock %}
-		</div>
-	</body>
-</html>
+{% extends "admin/base_site.html" %}
+{% block content %}
+...
+{% endblock %}

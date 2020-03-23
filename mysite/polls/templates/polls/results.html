@@ -1,0 +1,22 @@
+{% extends "base_layout.html" %}
+
+{% block content %}
+<div class="sidenav">
+		<a href="{% url 'index' %}">Home</a>
+		<a href="/polls">Polls</a>
+		<a href="/register"> Sign up</a>
+</div>
+
+<h1 style="text-align:center">{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li style="text-align:center">{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+ <li style="text-align:center"><a href="{% url 'polls:detail' question.id %}">Update</a></li>
+
+
+
+{% endblock %}
