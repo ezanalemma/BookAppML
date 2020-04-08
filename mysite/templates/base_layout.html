@@ -3,8 +3,26 @@
 	<head>
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'home/homestyle.css' %}">
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+
 	</head>
 	<body>
+		<div class="sidenav">
+			<a href="{% url 'index' %}">Home</a>
+			<a href="/polls">Polls</a>
+			{% if user.is_authenticated %}
+				<a href="/login"> {{user.username}}</a>
+				<a href="/logout"> Logout</a>
+			{% else %}
+				<a href="/register"> Signup</a>
+				<a href="/login"> Login</a>
+			{% endif %}
+		</div>
+		<!-- {% if messages %}
+			{% for message in messages %}
+				<script>M.toast({html: "toasted!!", classes: 'blue rounded', displayLength: 3000});</script>
+				{% endfor %}
+		{% endif %}  -->
 		<div class="wrapper">
 			{% block content %}
 			{% endblock %}
