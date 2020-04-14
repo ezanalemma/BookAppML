@@ -3,7 +3,7 @@
 	<head>
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'home/homestyle.css' %}">
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+		<script src="{% static 'home/home_page.js' %}"></script>
 
 	</head>
 	<body>
@@ -18,11 +18,6 @@
 				<a href="/login"> Login</a>
 			{% endif %}
 		</div>
-		<!-- {% if messages %}
-			{% for message in messages %}
-				<script>M.toast({html: "toasted!!", classes: 'blue rounded', displayLength: 3000});</script>
-				{% endfor %}
-		{% endif %}  -->
 		<div class="wrapper">
 			{% block content %}
 			{% endblock %}
