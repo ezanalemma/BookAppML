@@ -29,3 +29,20 @@ class New_User_Form_Test(TestCase):
     	}
     	form = NewUserForm(info)
     	self.assertFalse(form.is_valid())
+
+
+class Login_Test(TestCase):
+	@classmethod
+	def setUp(self):
+		self.credentials = {
+			'username': 'testclient',
+    		'email': 'user@user.com',
+    		'library_card_number': 123456789,
+    		'password1': 'test123456',
+    		'password2': 'test123456',
+		}
+		self.form = NewUserForm(self.credentials)
+	
+	def test_Login_valid(self):
+		response = self.client.post('/login/', self.credentials, follow=True)
+		self.assertTrue(self.form.save().is_authenticated)
