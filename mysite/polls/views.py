@@ -6,7 +6,7 @@ from django.template import loader
 from django.urls import reverse
 from django.views import generic
 
-from .models import Choice, Question
+from .models import Choice, Question, Rating
 
 
 class IndexView(generic.ListView):
@@ -25,7 +25,20 @@ class DetailView(generic.DetailView):
 
 class ResultsView(generic.DetailView):
     model = Question
+    #add individyal form
     template_name = 'polls/results.html'
+
+class RatingView(generic.DetailView):
+    #if request.method == 'POST':
+    # take care of instance
+    #form = RateForm(request.POST, instance=your-listing-instance)
+    #if form.is_valid():
+       # rate = form.save(commit=False)
+        # adding the user here.
+#        #rate.save()
+    model = Rating
+    template_name = 'polls/rating.html'
+
     
 
 def vote(request, question_id):
@@ -45,3 +58,16 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+def rateBook(request):
+        if request.method == 'POST':
+            if request.POST.get('title') and request.POST.get('content'):
+                book=MyCvsModel
+                post.title= request.POST.get('title')
+                post.content= request.POST.get('content')
+                post.save()
+                
+                return render(request, 'posts/create.html')  
+
+        else:
+                return render(request,'posts/create.html')
