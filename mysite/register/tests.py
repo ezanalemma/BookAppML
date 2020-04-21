@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .forms import NewUserForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout, authenticate
 # Create your tests here. 
 
 class New_User_Form_Test(TestCase):
@@ -32,17 +33,19 @@ class New_User_Form_Test(TestCase):
 
 
 class Login_Test(TestCase):
-	@classmethod
-	def setUp(self):
-		self.credentials = {
+	def test_Login_valid(self):
+		credentials = {
 			'username': 'testclient',
     		'email': 'user@user.com',
     		'library_card_number': 123456789,
     		'password1': 'test123456',
     		'password2': 'test123456',
 		}
-		self.form = NewUserForm(self.credentials)
-	
-	def test_Login_valid(self):
-		response = self.client.post('/login/', self.credentials, follow=True)
-		self.assertTrue(self.form.save().is_authenticated)
+		form = NewUserForm(credentials)
+		response = self.client.post('/login/', credentials, follow=True)
+		self.assertTrue(form.save().is_authenticated)
+		self.assertIsNotNone(form.save())
+
+	def test_Login_invalid(self):
+		user = authenticate(username='temporary', password='temporary')
+		self.assertIsNone(user)
