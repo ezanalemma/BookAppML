@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
+from django.contrib.auth.decorators import permission_required
+
 
 from .models import Choice, Question, Rating
 
@@ -59,15 +61,36 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-def rateBook(request):
-        if request.method == 'POST':
-            if request.POST.get('title') and request.POST.get('content'):
-                book=MyCvsModel
-                post.title= request.POST.get('title')
-                post.content= request.POST.get('content')
-                post.save()
-                
-                return render(request, 'posts/create.html')  
+@permission_required('admin.can_add_log_entry')
+def books_upload(request):
+    template_name = "polls/books_upload.html"
+    prompt={
+        'order': 'Order of the CSV should be book_id, good_reads_id, title, authors, year, genre, tag_id, image_url,small_image_url, isbn, isbn13'
+        }
+    if request.method == 'GET':
+        return render(request, template_name, prompt)
 
-        else:
-                return render(request,'posts/create.html')
+    csv_file = request.FILES('file')
+
+    if not csv_file.name.endswith('.csv'):
+        message.error(request,'This is not a csv file')
+
+    data_set = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+        _, created = Book.objects.update_or_create(
+            book_id = column[0],
+            good_reads_id = column[1],
+            title = column[2],
+            authors = column[3],
+            year = column[4],
+            genre = column[5],
+            tag_id = column[6],
+            image_url = column[7],
+            small_image_url = column[8],
+            isbn = column[9],
+            isbn13 = column[10]
+        )
+    context ={}
+    return render(request, template_name, context)

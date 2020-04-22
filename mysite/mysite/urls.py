@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from register import views as v
+from polls import views as views
 
 urlpatterns = [
     path('polls/', include('polls.urls')),
@@ -24,6 +25,7 @@ urlpatterns = [
     path("login", v.login_request, name="login"),
     path("logout", v.logout_request, name="logout"),
     path('register/', v.register, name="register"),
+    path("upload-csv/", views.books_upload, name='books_upload')
     # path('views/', include('home.urls')),
 ]
 

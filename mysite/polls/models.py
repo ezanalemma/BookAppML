@@ -33,32 +33,24 @@ class Rating(models.Model):
 	def __str__(self):
 		return self.rating_text
 
-#class MyCSvModel(CsvModel):
-#	bookID = IntegerField();
-#	good_reads_id = IntegerField();
-#	best_book_id = IntegerField();
-#	work_id = IntegerField();
+class Book(models.Model):
+	book_id = models.IntegerField();
+	good_reads_id = models.IntegerField();
+	title = models.CharField(max_length=200);
+	authors = models.CharField(max_length=300);
+	year = models.IntegerField();
+	genre = models.CharField(max_length= 200);
+	tag_id = models.IntegerField();
+	image_url  = models.CharField(max_length=300);
+	small_image_url = models.CharField(max_length=300);
 #	book_count = IntegerField();
-#	ISBN = FloatField();
-#	ISBN13 = FloatField();
-#	authors = CharField();
-#	original_publication_year = IntegerField();
-#	original_title = CharField();
-#	title = CharField();
-#	language_code = CharField();
-#	ratings_count = IntegerField();
-#	work_ratings_count = IntegerField();
-#	work_text_reviews_count = IntegerField();
-#	ratings_1 = IntegerField();
-#	ratings_2 = IntegerField();
-#	ratings_3 = IntegerField();
-#	ratings_4 = IntegerField();
-#	ratings_5 = IntegerField();
-#	image_url  = CharField();
-#	small_image_url = CharField();
-#	tag_id = IntegerField();
-#	count = IntegerField();
-#	tag_name = CharField();
+	isbn = models.IntegerField();
+	isbn13 = models.IntegerField();
+	def __str__(self):
+		return self.title
+	def get_image(self):
+		return self.image_url
+
 
 
 
