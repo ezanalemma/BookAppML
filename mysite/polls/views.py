@@ -78,7 +78,7 @@ def books_upload(request):
     data_set = csv_file.read().decode('UTF-8')
     io_string = io.StringIO(data_set)
     next(io_string)
-    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+    for column in csv.reader(io_string, delimiter=','):
         _, created = Book.objects.update_or_create(
             book_id = column[0],
             good_reads_id = column[1],
