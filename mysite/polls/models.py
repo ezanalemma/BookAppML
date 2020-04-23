@@ -2,7 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
-#from adaptor.model import CsvModel
+
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -27,25 +27,30 @@ class Rating(models.Model):
 	#user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	#dif_rate = models.IntegerField(null=True, blank=True)
 	#other_rate = models.IntegerField(null=True, blank=True)
-	rating_text = models.CharField(max_length=300, unique=True)
-	rating = models.IntegerField(default=0)
+	#rating_text = models.CharField(max_length=300, unique=True)
+	#rating = models.IntegerField(default=0)
 	#book = MyCSvModel.title
+	#def __str__(self):
+	#	return self.rating_text
+	question = models.ForeignKey(Question, on_delete=models.CASCADE)
+	choice_text = models.CharField(max_length=200)
+	votes = models.IntegerField(default=0)
 	def __str__(self):
-		return self.rating_text
+		return self.choice_text
 
 class Book(models.Model):
-	book_id = models.IntegerField();
-	good_reads_id = models.IntegerField();
-	title = models.CharField(max_length=200);
-	authors = models.CharField(max_length=300);
-	year = models.IntegerField();
+	book_id = models.IntegerField(default=0);
+	good_reads_id = models.IntegerField(default=0);
+	title = models.CharField(default = 0,max_length=200);
+	authors = models.CharField(default = 0, max_length=300);
+	year = models.IntegerField(default=0);
 	genre = models.CharField(max_length= 200);
-	tag_id = models.IntegerField();
-	image_url  = models.CharField(max_length=300);
-	small_image_url = models.CharField(max_length=300);
+	tag_id = models.IntegerField(default=0);
+	image_url  = models.URLField(blank=True, null=True)
+	small_image_url = models.URLField(blank=True, null=True);
 #	book_count = IntegerField();
-	isbn = models.IntegerField();
-	isbn13 = models.IntegerField();
+	isbn = models.IntegerField(default=0);
+	isbn13 = models.FloatField(default=0);
 	def __str__(self):
 		return self.title
 	def get_image(self):

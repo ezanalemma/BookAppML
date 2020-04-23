@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-
+import csv, io
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -8,7 +8,7 @@ from django.views import generic
 from django.contrib.auth.decorators import permission_required
 
 
-from .models import Choice, Question, Rating
+from .models import Choice, Question, Rating, Book
 
 
 class IndexView(generic.ListView):
@@ -70,7 +70,7 @@ def books_upload(request):
     if request.method == 'GET':
         return render(request, template_name, prompt)
 
-    csv_file = request.FILES('file')
+    csv_file = request.FILES['file']
 
     if not csv_file.name.endswith('.csv'):
         message.error(request,'This is not a csv file')
