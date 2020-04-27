@@ -43,14 +43,14 @@ class Book(models.Model):
 	good_reads_id = models.IntegerField(default=0);
 	title = models.CharField(default = 0,max_length=200);
 	authors = models.CharField(default = 0, max_length=300);
-	year = models.IntegerField(default=0);
+	year = models.FloatField(default=0);
 	genre = models.CharField(max_length= 200);
 	tag_id = models.IntegerField(default=0);
 	image_url  = models.URLField(blank=True, null=True)
 	small_image_url = models.URLField(blank=True, null=True);
 #	book_count = IntegerField();
-	isbn = models.IntegerField(default=0);
-	isbn13 = models.FloatField(default=0);
+	isbn = models.CharField(default=0, max_length=200);
+	isbn13 = models.CharField(default=0, max_length=200);
 	def __str__(self):
 		return self.title
 	def get_image(self):
