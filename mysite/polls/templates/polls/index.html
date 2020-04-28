@@ -1,7 +1,3 @@
-
-
-
-
 {% extends "base_layout.html" %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
@@ -9,11 +5,11 @@
 {% block content %}
 
 	{% if latest_question_list %}
-	<div class="sidenav">
+	<!-- <div class="sidenav">
 			<a href="{% url 'index' %}">Home</a>
 			<a href="/polls">Polls</a>
 			<a href="/register"> Sign up</a>
-		</div>
+		</div> -->
 		<h1 style="text-align:center" >Survey Quesitons</h1>
 	    	<ul>
 	    	{% for question in latest_question_list %}
