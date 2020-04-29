@@ -12,7 +12,7 @@
 		<form method="POST" class="form-group">
 			{% csrf_token %}
 			{{form.as_p}}
-			<button type="submit" class="btn btn-success">Sign up</button>
+			<button type="submit" id="btn" class="btn btn-success">Sign up</button>
 			{% if messages %}
 				<ul class="messages">
 				    {% for message in messages %}
@@ -21,6 +21,6 @@
 				</ul>
 			{% endif %} 
 		</form>
-		If you already have an account, <a href="\login">login</a> instead.
+		If you already have an account, <a href="\login" id="have_login">login</a> instead.
 	</body>
 </html>
