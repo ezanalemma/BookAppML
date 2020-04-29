@@ -48,3 +48,35 @@ img {
 	margin-left: 14%;
 }
 
+.logging {
+	padding-top: 5%;
+	padding-left: 10%;
+	font-size: 20px;
+}
+
+
+.sidenav1 {
+	height:90px;
+	width:100%;
+	position: absolute;
+	z-index:1;
+	top:0;
+	left:0;
+	background-color:#111;
+	overflow-x: :hidden;
+}
+
+#sign {
+	color: white;
+	font-size: 30px;
+	text-align: center;
+}
+
+#already {
+	padding-left: 10%;
+}
+
+.container {
+	padding-top: 15%;
+	padding-left: 35%;
+}

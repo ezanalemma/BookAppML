@@ -4,23 +4,25 @@
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'home/homestyle.css' %}">
 		<script src="{% static 'home/home_page.js' %}"></script>
+		{% load crispy_forms_tags %}
 	</head>
 
-	{% block title %}Create an account{% endblock %}
 	<body>
-
-		<form method="POST" class="form-group">
-			{% csrf_token %}
-			{{form.as_p}}
-			<button type="submit" id="btn" class="btn btn-success">Sign up</button>
-			{% if messages %}
-				<ul class="messages">
-				    {% for message in messages %}
-				    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-			{% endfor %}
-				</ul>
-			{% endif %} 
-		</form>
-		If you already have an account, <a href="\login" id="have_login">login</a> instead.
+		<div class="sidenav1">
+			<p id="sign">Sign up!</p>
+			<form method="POST" class="logging">
+				{% csrf_token %}
+				{{form.as_p}}
+				<button type="submit" id="btn" style="background-color:#F4EB16; color:blue" class="btn btn-outline-info">Sign up</button>
+				{% if messages %}
+					<ul class="messages">
+					    {% for message in messages %}
+					    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+				{% endfor %}
+					</ul>
+				{% endif %} 
+			</form>
+			<p id="already"> If you already have an account, <a href="\login" id="have_login">login</a> instead.</p>
+		</div>
 	</body>
 </html>
