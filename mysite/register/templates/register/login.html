@@ -7,21 +7,23 @@
 	</head>
 
 	<body>
-
+		<div class="sidenav1">
+				<p id="sign">Login!</p>
+		</div>
 	    <div class="container">
-	        <form method="POST">
-	        {% csrf_token %}
-	        {{form.as_p}}
-	            <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">Login</button>
-	           	{% if messages %}
-					<ul class="messages">
-					    {% for message in messages %}
-					    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-	    		{% endfor %}
-					</ul>
-				{% endif %}
-	        </form>
-	        Don't have an account? <a href="/register" target="blank"><strong>register here</strong></a>!
+		        <form method="POST" class="logging">
+		        {% csrf_token %}
+		        {{form.as_p}}
+		            <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" id="log" type="submit">Login</button>
+		           	{% if messages %}
+						<ul class="messages">
+						    {% for message in messages %}
+						    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+		    		{% endfor %}
+						</ul>
+					{% endif %}
+		        </form>
+	        <p id="already"> Don't have an account? <a href="/register" target="blank"><strong>register here</strong></a>!</p>
 	    </div>
 	</body>
 </html>
