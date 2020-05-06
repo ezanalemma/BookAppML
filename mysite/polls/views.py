@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import permission_required
 
 from .models import Choice, Question, Rating, Book
 
-
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
@@ -45,31 +44,24 @@ class RatingView(generic.DetailView):
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
+    if request.method == "POST":
+        display_type1 = request.POST.getlist('display', None)
+        if not display_type1:
+            return render(request, 'polls/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
         })
-    else:
-        if response.method == "POST":
-            print(response.POST)
-            if response.POST.get("save"):
-                for choice in question.choice_set.all():
-                    if response.POST.get("c" + str(choice_text)) == "clicked":
-                        choice.complete = True;
-                    else:
-                        choice.complete = False;
+        for dis in display_type1:
+            selected_choice = question.choice_set.get(pk=dis)
+            if selected_choice in question.choice_set.all():
+                selected_choice.votes += 1
+                selected_choice.complete = True
+                selected_choice.save()
 
-                    choice.save()
-        #selected_choice.votes += 1
-        #selected_choice.save()
         # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from bein g posted twice if a
+        # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 @permission_required('admin.can_add_log_entry')
 def books_upload(request):
