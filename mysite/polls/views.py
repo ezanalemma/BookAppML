@@ -54,10 +54,20 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        if response.method == "POST":
+            print(response.POST)
+            if response.POST.get("save"):
+                for choice in question.choice_set.all():
+                    if response.POST.get("c" + str(choice_text)) == "clicked":
+                        choice.complete = True;
+                    else:
+                        choice.complete = False;
+
+                    choice.save()
+        #selected_choice.votes += 1
+        #selected_choice.save()
         # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
+        # with POST data. This prevents data from bein g posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
@@ -91,6 +101,67 @@ def books_upload(request):
             small_image_url = column[8],
             isbn = column[9],
             isbn13 = column[10]
+        )
+    context ={}
+    return render(request, template_name, context)
+
+@permission_required('admin.can_add_log_entry')
+def rating_upload(request):
+    template_name = "polls/rating_upload.html"
+    if request.method == 'GET':
+        return render(request, template_name, prompt)
+
+    csv_file = request.FILES['file']
+
+    if not csv_file.name.endswith('.csv'):
+        message.error(request,'This is not a csv file')
+
+    data_set = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in csv.reader(io_string, delimiter=','):
+        _, created = Rating.objects.update_or_create(
+            user_id = column[0],
+            art = column[1],
+            biography = column[2],
+            business = column[3],
+            chick_lit = column[4],
+            childrens = column[5],
+            christian = column[6],
+            classics = column[7],
+            comics = column[8],
+            contemporary = column[9],
+            cookbooks = column[10],
+            crime =  column[11],
+            ebooks =  column[12],
+            fantasy =  column[13],
+            fiction =  column[14],
+            gay_lesbian =  column[15],
+            graphic_novels =  column[16],
+            historical_fiction =  column[17],
+            history =  column[18],
+            horror =  column[19],
+            humor =  column[20],
+            manga =  column[21],
+            memoir =  column[22],
+            music =  column[23],
+            mystery =  column[24],
+            nonfiction =  column[25],
+            paranormal =  column[26],
+            philosophy =  colummn[27],
+            poetry = column[28],
+            psychology =  column[29],
+            religion =  column[30],
+            romance =  column[31],
+            science =  column[32],
+            science_fiction =  column[33],
+            self_help =  column[34],
+            suspense =  column[35],
+            spirituality =  column[36],
+            sports =  column[38],
+            thriller =  column[39],
+            travel =  column[40],
+            young_adult =  column[41]
         )
     context ={}
     return render(request, template_name, context)

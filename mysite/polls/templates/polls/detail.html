@@ -17,10 +17,13 @@
 
 {% csrf_token %}
 {% for choice in question.choice_set.all %}
- 	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+	{% if choice.complete == True %}
+ 		<li><input type="checkbox" value ="{{ choice.id }}", name="c{{choice.id}}" checked>{{choice.choice_text}}</li>
+ 	{% else %}
+    	<li><input type="checkbox" value = "{{ choice.id }}", name="c{{choice.id}}">{{choice.choice_text}}</li>
+    {% endif %}
 {% endfor %}
-<input type="submit" value="Submit">
+<button type="submit" value="save", name="save">Save</button>
 </li style="text-align:center">
 
 </form>
