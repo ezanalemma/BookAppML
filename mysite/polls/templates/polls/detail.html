@@ -8,23 +8,26 @@
 </div> -->
 
 <h1 style="text-align:center">{{ question.question_text }}</h1>
-	
-<li style="text-align:center">
-	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'polls:vote' question.id %}" method="post">
 
 
 {% csrf_token %}
 {% for choice in question.choice_set.all %}
-	{% if choice.complete == True %}
- 		<li><input type="checkbox" value ="{{ choice.id }}", name="display">{{choice.choice_text}}</li>
- 	{% else %}
-    	<li><input type="checkbox" value = "{{ choice.id }}", name="display">{{choice.choice_text}}</li>
-    {% endif %}
+	<div style="text-align: center">
+		{% if choice.complete == True %}
+	 		<input type="checkbox" value ="{{ choice.id }}", name="display">{{choice.choice_text}}
+	 	{% else %}
+	    	<input type="checkbox" value = "{{ choice.id }}", name="display">{{choice.choice_text}}
+	    {% endif %}
+	</div>
 {% endfor %}
-<button type="submit" value="save", name="save">Save</button>
-</li style="text-align:center">
+<div class="imgButton">
+	<button type="submit" value="save", name="save">Save</button>
+</div>
+<!-- </li style="text-align:center"> -->
 
 </form>
 
