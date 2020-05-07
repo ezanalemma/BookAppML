@@ -67,9 +67,8 @@ img {
 }
 
 #sign {
-	color: white;
+	color: black;
 	font-size: 30px;
-	text-align: center;
 }
 
 #already {
@@ -77,6 +76,32 @@ img {
 }
 
 .container {
-	padding-top: 15%;
+	padding-top: 10%;
 	padding-left: 35%;
+}
+
+p1 {
+	color: white;
+	font-family: "Lucida Console", Courier, monospace;
+	font-size: 25px;
+	padding: 5px;
+	border: 5px solid white;
+}
+
+.title {
+	padding: 10px;
+}
+
+p2 {
+	color: white;
+	font-family: "Lucida Console", Courier, monospace;
+	font-size: 25px;
+	padding: 5px;
+	border: 5px solid white;
+}
+
+.title1 {
+	padding-left: 46%;
+	padding-top: 3%;
+	/*display: inline-block;*/
 }

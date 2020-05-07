@@ -8,10 +8,13 @@
 
 	<body>
 		<div class="sidenav1">
-				<p id="sign">Login!</p>
+			<div class = "title1">
+				<p2> VISIBLE </p2>
+			</div>
 		</div>
 	    <div class="container">
 		        <form method="POST" class="logging">
+		        	<p id="sign">Login</p>
 		        {% csrf_token %}
 		        {{form.as_p}}
 		            <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" id="log" type="submit">Login</button>
