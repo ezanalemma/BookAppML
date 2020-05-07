@@ -100,6 +100,9 @@ def books_upload(request):
 @permission_required('admin.can_add_log_entry')
 def rating_upload(request):
     template_name = "polls/rating_upload.html"
+    prompt={
+        'Upload ratings.csv'
+        }
     if request.method == 'GET':
         return render(request, template_name, prompt)
 
