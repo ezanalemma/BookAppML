@@ -1,0 +1,14 @@
+
+{% block body %}
+<div class= "container">
+	<h1>Thank You for Joining!</h1>
+	<h2> Fill out the survey below to get started</h2>
+	<form action="/survey/" method="post">
+    	{% csrf_token %}
+    	{{ form.errors }}
+    	{{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+</div>
+{% endblock %}

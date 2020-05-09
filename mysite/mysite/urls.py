@@ -26,7 +26,8 @@ urlpatterns = [
     path("logout", v.logout_request, name="logout"),
     path('register/', v.register, name="register"),
     path("upload-csv/", views.books_upload, name='books_upload'),
-    path("upload-rating/", views.rating_upload, name='rating_upload')
+    path("upload-rating/", views.rating_upload, name='rating_upload'),
+    path("survey/", views.get_survey, name='survey')
     # path('views/', include('home.urls')),
 ]
 

@@ -6,7 +6,7 @@ from django.template import loader
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.decorators import permission_required
-
+from .forms import SurveyForm
 
 from .models import Choice, Question, Rating, Book
 
@@ -16,7 +16,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.order_by('-pub_date')[:10]
 
 
 class DetailView(generic.DetailView):
@@ -40,6 +40,8 @@ class RatingView(generic.DetailView):
     model = Rating
     template_name = 'polls/rating.html'
 
+class survey(generic.DetailView):
+    template_name = 'survey.html'
     
 
 def vote(request, question_id):
@@ -53,10 +55,13 @@ def vote(request, question_id):
         })
         for dis in display_type1:
             selected_choice = question.choice_set.get(pk=dis)
+            selected_choice.votes = False
+            selected_choice.save()
             if selected_choice in question.choice_set.all():
-                selected_choice.votes += 1
+                selected_choice.votes = True
                 selected_choice.complete = True
                 selected_choice.save()
+
 
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
@@ -101,7 +106,7 @@ def books_upload(request):
 def rating_upload(request):
     template_name = "polls/rating_upload.html"
     prompt={
-        'Upload ratings.csv'
+        'order' : 'Upload ratings.csv'
         }
     if request.method == 'GET':
         return render(request, template_name, prompt)
@@ -158,5 +163,16 @@ def rating_upload(request):
             travel =  column[40],
             young_adult =  column[41]
         )
-    context ={}
-    return render(request, template_name, context)
+    context ={};
+    return render(request, template_name, context);
+
+def get_survey(request):
+    template_name = "polls/survey.html"
+    if request.method == 'POST':
+        form = SurveyForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/home/')
+    else:
+        form = SurveyForm()
+
+    return render(request, template_name, {'form': form})
