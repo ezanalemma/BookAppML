@@ -6,12 +6,14 @@
 		<p style="text-align:center">Your next book package is arriving June 1st!</p>
 		<div class="imgContainer">
 			<div>
-				<img src="{% static '../../static/hp.jpg'%}" alt="">	
+				<img src="{{theSrc}}"/>
 			</div>
 
-			<div class="imgButton">
-                <input type="button" class="button" value="Recommend New Book" >
-            </div>
+			<a href="{% url 'index' %}" >
+				<div class="imgButton">
+	                <input type="button" class="button" value="Recommend New Book" >
+	            </div>
+	         </a>
 		
 			<!-- <div class="imgButton">
                 <input type="button" class="button" value="Cancel Subscription">

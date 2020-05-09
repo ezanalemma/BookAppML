@@ -24,7 +24,7 @@ class Choice(models.Model):
 
 
 class Book(models.Model):
-    book_id = models.IntegerField(default=0);
+    book_id = models.IntegerField(default=0, primary_key=True);
     good_reads_id = models.IntegerField(default=0);
     title = models.CharField(default = 0,max_length=200);
     authors = models.CharField(default = 0, max_length=300);
