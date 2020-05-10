@@ -3,8 +3,10 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .forms import NewUserForm
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
+
 def register(response):
 	if response.method == "POST":
 		form = NewUserForm(response.POST)
@@ -14,7 +16,7 @@ def register(response):
 			messages.success(response, f"New Account created: {username}")
 			login(response, user)
 			messages.info(response, f"You are now logged in as {username}")
-			return redirect("/home")
+			return redirect("../survey/")
 		else:
 			for msg in form.error_messages:
 				messages.error(response, f"{msg}: {form.error_messages[msg]}")
