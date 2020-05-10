@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('', views.detail, name='detail'),
+    path('index2/', views.index2, name='index2'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
