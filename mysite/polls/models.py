@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from .forms import SurveyForm
 
 
 class Question(models.Model):
@@ -46,4 +47,18 @@ class Rating(models.Model):
     book_id = models.IntegerField(default =0)
     rating = models.IntegerField(default=0)
 
+class Survey(models.Model):
+    username = models.CharField(max_length=100)
+    genres = models.CharField(max_length = 100)
+    average_read_time = models.CharField(max_length=100)
+    last_book = models.CharField(max_length=100)
+    rating = models.CharField(max_length=100 )
+    favorite_author = models.CharField(max_length=100)
+    def __str__(self):
+        return self.username
+
+
+class UserSurvey(models.Model):
+    username = models.CharField(max_length =50, primary_key=True)
+    survey_results = models.ForeignKey(Survey, on_delete=models.CASCADE)
 	

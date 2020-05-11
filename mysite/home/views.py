@@ -2,9 +2,9 @@ from django.shortcuts import render
 from polls.models import Book, Rating
 from .models import UserBook
 import random
-import pandas as pd
-import collections
-import sklearn_recommender as skr
+#import pandas as pd
+#import collections
+#import sklearn_recommender as skr
 
 # Create your views here.
 
@@ -42,27 +42,21 @@ def index2(request):
 
 
 def get_book_rec(user):
-	user_genre_average_rating = pd.read_csv("/BookAppML/ml processing/user_genre_average_rating.csv")
-	tf = skr.transformer.UserItemTransformer(user_col='user_id', item_col='genre', value_col='rating', binarize=False)
-	user_item = tf.transform(user_genre_average_rating)
-	tf = skr.transformer.SimilarityTransformer(cols=(0, -1), normalize=False)
-	sim = tf.transform(user_item)
-	rec = skr.recommender.SimilarityRecommender(None).fit(sim)
+	#user_genre_average_rating = pd.read_csv("/BookAppML/ml processing/user_genre_average_rating.csv")
+	#tf = skr.transformer.UserItemTransformer(user_col='user_id', item_col='genre', value_col='rating', binarize=False)
+	#user_item = tf.transform(user_genre_average_rating)
+	#tf = skr.transformer.SimilarityTransformer(cols=(0, -1), normalize=False)
+	#sim = tf.transform(user_item)
+	#rec = skr.recommender.SimilarityRecommender(None).fit(sim)
 
 	# 2 should be replaced with current logged in user's user_id with their survey preferences etc
-	most_similar_user = rec.predict([2])[0] 
+	#most_similar_user = rec.predict([2])[0] 
 
 	# FIX: get list not working
-	for obj in Rating.objects.getlist(pk=most_similar_user):
-		if obj.rating == 5:
-			return obj.book_id
-	book = random.choice(Book.objects.all()) 
+#	for obj in Rating.objects.getlist(pk=most_similar_user):
+#		if obj.rating == 5:
+#			return obj.book_id
+	book = random.choice(Book.objects.all());
 	pk1 = book.book_id 
 	return pk1
-
-
-
-
-
-
 

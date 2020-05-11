@@ -7,8 +7,8 @@ from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.decorators import permission_required
 from .forms import SurveyForm
-
-from .models import Choice, Question, Rating, Book
+from home.models import UserBook
+from .models import Choice, Question, Rating, Book, Survey, UserSurvey
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -130,10 +130,27 @@ def rating_upload(request):
 
 def get_survey(request):
     template_name = "polls/survey.html"
+    user1 = request.user
     if request.method == 'POST':
         form = SurveyForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/home/')
+            name = form.cleaned_data['user']
+            genres1 = form.cleaned_data['genres']
+            read_time = form.cleaned_data['average_read_time']
+            book = form.cleaned_data['last_book']
+            rate = form.cleaned_data['rating']
+            fav_author = form.cleaned_data['favorite_author']
+            survey = Survey.objects.create(username= name,
+                genres=genres1,
+                average_read_time = read_time,
+                last_book = book,
+                rating = rate,
+                favorite_author = fav_author
+            )
+            user_survey = UserSurvey.objects.create(username = user1.username,survey_results = survey)
+            survey.save()
+            user_survey.save()
+            return HttpResponseRedirect('/home/index2')
     else:
         form = SurveyForm()
 
