@@ -6,7 +6,7 @@ from django.template import loader
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.decorators import permission_required
-from .forms import SurveyForm
+from .forms import SurveyForm, UpdateSurveyForm
 from home.models import UserBook
 from .models import Choice, Question, Rating, Book, Survey, UserSurvey
 
@@ -43,6 +43,9 @@ class RatingView(generic.DetailView):
 class survey(generic.DetailView):
     template_name = 'survey.html'
     
+
+# class update(generic.DetailView):
+#     template_name = 'surveyUpdate.html'
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -184,3 +187,78 @@ def get_survey(request):
         form = SurveyForm()
 
     return render(request, template_name, {'form': form})
+
+
+def get_update_survey(request):
+    template_name = "polls/surveyUpdate.html"
+    user1 = request.user
+    if request.method == 'POST':
+        form = UpdateSurveyForm(request.POST)
+        if form.is_valid():
+            art = form.cleaned_data['art']
+            bio = form.cleaned_data['bio']
+            business = form.cleaned_data['business']
+            classics = form.cleaned_data['classics']
+            crime = form.cleaned_data['crime']
+            fantasy = form.cleaned_data['fantasy']
+            fiction = form.cleaned_data['fiction']
+            horror = form.cleaned_data['horror']
+            humor = form.cleaned_data['humor']
+            mystery = form.cleaned_data['mystery']
+            nonfiction = form.cleaned_data['nonfiction']
+            romance = form.cleaned_data['romance']
+            suspense = form.cleaned_data['suspense']
+            sports = form.cleaned_data['sports']
+            young_adult = form.cleaned_data['young_adult']
+            # survey = Survey.objects.filter(username=user1.username)
+            survey = None
+            for s in Survey.objects.all():
+                if s.username == user1.username:
+                    survey = s
+            if survey:
+                survey.art = art
+                survey.biography=bio
+                survey.business=business
+                survey.classics=classics
+                survey.crime=crime
+                survey.fantasy=fantasy
+                survey.fiction=fiction
+                survey.horror=horror
+                survey.humor=humor
+                survey.mystery=mystery
+                survey.nonfiction=nonfiction
+                survey.romance=romance
+                survey.suspense=suspense
+                survey.sports=sports
+                survey.young_adult=young_adult
+
+            # survey = Survey.objects.create(username= name,
+            #     art=art,
+            #     biography=bio,
+            #     business=business,
+            #     classics=classics,
+            #     crime=crime,
+            #     fantasy=fantasy,
+            #     fiction=fiction,
+            #     horror=horror,
+            #     humor=humor,
+            #     mystery=mystery,
+            #     nonfiction=nonfiction,
+            #     romance=romance,
+            #     suspense=suspense,
+            #     sports=sports,
+            #     young_adult=young_adult,
+            #     average_read_time = read_time,
+            #     last_book = book,
+            #     rating = rate,
+            #     favorite_author = fav_author
+            # )
+            # user_survey = UserSurvey.objects.create(username = user1.username,survey_results = survey)
+            survey.save()
+            # user_survey.save()
+            return HttpResponseRedirect('/home')
+    else:
+        form = UpdateSurveyForm()
+
+    return render(request, template_name, {'form': form})
+
