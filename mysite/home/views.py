@@ -2,9 +2,11 @@ from django.shortcuts import render
 from polls.models import Book, Rating
 from .models import UserBook
 import random
-#import pandas as pd
-#import collections
-#import sklearn_recommender as skr
+import pandas as pd
+import numpy as np
+import collections
+import sklearn_recommender as skr
+from polls.models import Survey
 
 # Create your views here.
 
@@ -28,10 +30,10 @@ def index(request):
 def index2(request):
 	# random.seed(1)
 	user1 = request.user #get current user
-	book = random.choice(Book.objects.all()) 
-	pk1 = book.book_id 
+	# book = random.choice(Book.objects.all()) 
+	# pk1 = book.book_id 
 	#REPLACE pk1 WITH get_book_rec(user1):
-	# pk1 = get_book_rec(user1)
+	pk1 = get_book_rec2(user1)
 	bookPk = (Book.objects.get(pk=pk1)).image_url
 
 	user_book = UserBook.objects.get(pk=user1.username)
@@ -41,21 +43,158 @@ def index2(request):
 	return render(request, 'home/index2.html', {'theSrc': bookPk})
 
 
-def get_book_rec(user):
-	#user_genre_average_rating = pd.read_csv("/BookAppML/ml processing/user_genre_average_rating.csv")
-	#tf = skr.transformer.UserItemTransformer(user_col='user_id', item_col='genre', value_col='rating', binarize=False)
-	#user_item = tf.transform(user_genre_average_rating)
-	#tf = skr.transformer.SimilarityTransformer(cols=(0, -1), normalize=False)
-	#sim = tf.transform(user_item)
-	#rec = skr.recommender.SimilarityRecommender(None).fit(sim)
+def get_book_rec(user1):
+	user_genre_average_rating = pd.read_csv("home/user_genre_average_rating.csv")
+
+	listOfSeries = []
+	# genre_num = 0
+	genre = " "
+	for survey in Survey.objects.all():
+		if survey.username == user1.username:
+			genre = survey.genres
+
+	# genre_tup = Choices[genre_num - 1]
+	# genre = genre_tup[1]
+
+	allGenres = [
+		'contemporary', 
+		'fiction', 
+		'mystery', 
+		'romance', 
+		'history', 
+		'ebooks', 
+		'fantasy',
+		'memoir',
+		'thriller', 
+		'paranormal',
+		'classics',
+		'horror',
+		'nonfiction',
+		'crime',
+		'religion',
+		'science',
+		'biography',
+		'art',
+		'travel',
+		'psychology',
+		'music',
+		'philosophy',
+		'suspense',
+		'comics',
+		'spirituality',
+		'christian',
+		'poetry',
+		'manga',
+		'business',
+		'cookbooks',
+		'sports'
+	]
+
+	for g in allGenres:
+		if g == genre:
+			s = pd.Series([7130, 405.0, g, 5.0], index=user_genre_average_rating.columns ) 
+		else:
+			s = pd.Series([7130, 405.0, g, 2.5], index=user_genre_average_rating.columns )
+		listOfSeries.append(s) 
+	with_user_input = user_genre_average_rating.append(listOfSeries , ignore_index=True)
+	tf = skr.transformer.UserItemTransformer(user_col='user_id', item_col='genre', value_col='rating', binarize=False)
+	user_item = tf.transform(with_user_input)
+
+
+	# tf = skr.transformer.UserItemTransformer(user_col='user_id', item_col='genre', value_col='rating', binarize=False)
+	# user_item = tf.transform(user_genre_average_rating)
+	tf = skr.transformer.SimilarityTransformer(cols=(0, -1), normalize=False)
+	sim = tf.transform(user_item)
+	rec = skr.recommender.SimilarityRecommender(None).fit(sim)
 
 	# 2 should be replaced with current logged in user's user_id with their survey preferences etc
-	#most_similar_user = rec.predict([2])[0] 
+	most_similar_users = rec.predict([405])[0] 
 
-	# FIX: get list not working
-#	for obj in Rating.objects.getlist(pk=most_similar_user):
-#		if obj.rating == 5:
-#			return obj.book_id
+	# books = Rating.objects.getlist(pk=most_similar_user)
+	books = Rating.objects.filter(user_id=most_similar_users[0],rating=5)
+	if books:
+		b = random.choice(books)
+		return b.book_id
+
+	book = random.choice(Book.objects.all());
+	pk1 = book.book_id 
+	return pk1
+
+
+
+def get_book_rec2(user1):
+	user_genre_average_rating = pd.read_csv("home/user_genre_average_rating.csv")
+
+	user_book = UserBook.objects.get(pk=user1.username)
+	book = user_book.book_id
+	this_genre = Book.objects.get(pk=book).genre
+
+	listOfSeries = []
+	# genre_num = 0
+
+	# genre_tup = Choices[genre_num - 1]
+	# genre = genre_tup[1]
+
+	allGenres = [
+		'contemporary', 
+		'fiction', 
+		'mystery', 
+		'romance', 
+		'history', 
+		'ebooks', 
+		'fantasy',
+		'memoir',
+		'thriller', 
+		'paranormal',
+		'classics',
+		'horror',
+		'nonfiction',
+		'crime',
+		'religion',
+		'science',
+		'biography',
+		'art',
+		'travel',
+		'psychology',
+		'music',
+		'philosophy',
+		'suspense',
+		'comics',
+		'spirituality',
+		'christian',
+		'poetry',
+		'manga',
+		'business',
+		'cookbooks',
+		'sports'
+	]
+
+	for g in allGenres:
+		if g == this_genre:
+			s = pd.Series([7130, 405.0, g, 4.0], index=user_genre_average_rating.columns ) 
+		else:
+			s = pd.Series([7130, 405.0, g, 2.5], index=user_genre_average_rating.columns )
+		listOfSeries.append(s) 
+	with_user_input = user_genre_average_rating.append(listOfSeries , ignore_index=True)
+	tf = skr.transformer.UserItemTransformer(user_col='user_id', item_col='genre', value_col='rating', binarize=False)
+	user_item = tf.transform(with_user_input)
+
+
+	# tf = skr.transformer.UserItemTransformer(user_col='user_id', item_col='genre', value_col='rating', binarize=False)
+	# user_item = tf.transform(user_genre_average_rating)
+	tf = skr.transformer.SimilarityTransformer(cols=(0, -1), normalize=False)
+	sim = tf.transform(user_item)
+	rec = skr.recommender.SimilarityRecommender(None).fit(sim)
+
+	# 2 should be replaced with current logged in user's user_id with their survey preferences etc
+	most_similar_users = rec.predict([405])[0] 
+
+	# books = Rating.objects.getlist(pk=most_similar_user)
+	books = Rating.objects.filter(user_id=most_similar_users[0],rating=5)
+	if books:
+		b = random.choice(books)
+		return b.book_id
+
 	book = random.choice(Book.objects.all());
 	pk1 = book.book_id 
 	return pk1

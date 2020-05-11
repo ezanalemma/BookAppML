@@ -10,6 +10,26 @@ from .forms import SurveyForm
 from home.models import UserBook
 from .models import Choice, Question, Rating, Book, Survey, UserSurvey
 
+
+Choices=[
+    ("1", "Art"),
+    ("2", "Biography"),
+    ("3", "Business"),
+    ("4", "Classics"),
+    ("5", "Crime"),
+    ("6", "Fantasy"),
+    ("7", "Fiction"),
+    ("8", "Horror"),
+    ("9", "Humor"),
+    ("10", "Mystery"),
+    ("11", "Non-Fiction"),
+    ("12", "Romance"),
+    ("13", "Suspense"),
+    ("14", "Sports"),
+    ("15", "Young Adult")
+]
+
+
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
@@ -136,6 +156,11 @@ def get_survey(request):
         if form.is_valid():
             name = form.cleaned_data['user']
             genres1 = form.cleaned_data['genres']
+
+            for choice in Choices:
+                if choice[0] == genres1:
+                    genres1 = choice[1]
+
             read_time = form.cleaned_data['average_read_time']
             book = form.cleaned_data['last_book']
             rate = form.cleaned_data['rating']

@@ -21,6 +21,24 @@ Choices=(
 	("15", "Young Adult")
 
 
+
+	# ("1", "Art"),
+	# ("2", "Biography"),
+	# ("3", "Business"),
+	# ("4", "Classics"),
+	# ("5", "Crime"),
+	# ("6", "Fantasy"),
+	# ("7", "Fiction"),
+	# ("8", "Horror"),
+	# ("9", "Humor"),
+	# ("10", "Mystery"),
+	# ("11", "Non-Fiction"),
+	# ("12", "Romance"),
+	# ("13", "Suspense"),
+	# ("14", "Sports"),
+	# ("15", "Young Adult")
+
+
 )
 
 R=(
@@ -39,8 +57,10 @@ Stars=(
 )
 
 class SurveyForm(forms.Form):
-	user = forms.CharField(label="Name ", max_length=100)
-	genres = forms.MultipleChoiceField(label = "What are your favorite genres? " ,choices = Choices)
+	question = "What are you favorite genres? Options: Art, Biography, Business, Classics, Crime, Fantasy, Fiction, Horror, Humor, Mystery, Non-Fiction, Romance, Suspense, Sports, Young Adult"
+	user = forms.CharField(label="Username", max_length=100)
+	genres = forms.CharField(label = question, max_length=50)
+	# genres = forms.MultipleChoiceField(label = question, choices = Choices)
 	average_read_time = forms.MultipleChoiceField(label = "How often do you read?", choices = R)
 	last_book = forms.CharField(label="What is the last book you read? ", max_length=100)
 	rating = forms.MultipleChoiceField(label = "How would you rate that book?",choices = Stars )
