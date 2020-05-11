@@ -150,7 +150,7 @@ def get_survey(request):
             user_survey = UserSurvey.objects.create(username = user1.username,survey_results = survey)
             survey.save()
             user_survey.save()
-            return HttpResponseRedirect('/home/index2')
+            return HttpResponseRedirect('/home')
     else:
         form = SurveyForm()
 
