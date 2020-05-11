@@ -144,6 +144,45 @@ plt.ylabel('Number of Books')
 
 plt.show()
 
+listOfSeries = [pd.Series([7130, 405.0, 'contemporary', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7131, 405.0, 'fiction', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7132, 405.0, 'mystery', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7133, 405.0, 'romance', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7134, 405.0, 'history', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7135, 405.0, 'ebooks', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7136, 405.0, 'fantasy', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7137, 405.0, 'memoir', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7138, 405.0, 'thriller', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7139, 405.0, 'paranormal', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7140, 405.0, 'classics', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7141, 405.0, 'horror', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7142, 405.0, 'nonfiction', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7143, 405.0, 'crime', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7144, 405.0, 'religion', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7145, 405.0, 'science', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7146, 405.0, 'biography', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7147, 405.0, 'art', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7148, 405.0, 'travel', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7149, 405.0, 'psychology', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7150, 405.0, 'music', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7151, 405.0, 'philosophy', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7152, 405.0, 'suspense', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7153, 405.0, 'comics', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7154, 405.0, 'spirituality', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7155, 405.0, 'christian', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7156, 405.0, 'poetry', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7157, 405.0, 'manga', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7158, 405.0, 'business', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7159, 405.0, 'cookbooks', 2.5], index=user_genre_average_rating.columns ) ,
+                pd.Series([7160, 405.0, 'sports', 2.5], index=user_genre_average_rating.columns )]
+
+with_user_input = user_genre_average_rating.append(listOfSeries , ignore_index=True)
+
+#before user input
+#print(user_genre_average_rating)
+#after user input
+#print(with_user_input)
+
 #verify how many genres we're working with #31
 #print(df['genre'].unique())
 
@@ -155,8 +194,12 @@ print("INPUT: user2. OUTPUT: most similar users in order to suggest book.\n")
 
 #organizing dataset to make it ingestible
 tf = skr.transformer.UserItemTransformer(user_col='user_id', item_col='genre', value_col='rating', binarize=False)
-user_item = tf.transform(user_genre_average_rating)
+user_item = tf.transform(with_user_input)
 print(user_item) #user_item matrix 
+
+
+
+#print(updated_user_item)
 
 #tests
 print("\ntests:")
@@ -170,15 +213,15 @@ sim = tf.transform(user_item)
 
 # get list of most similar ids
 rec = skr.recommender.SimilarityRecommender(None).fit(sim)
-most_similar_users = rec.predict([2])[0]
+most_similar_users = rec.predict([405])[0]
 
 print("\n5 most similar users list: ")
 print(most_similar_users[:5])
 
 #user_genre_average_rating
 
-print(user_item.loc[[2, 298]])
-#printable = user_item.loc[[2, 298]]
+#print(user_item.loc[[405, 284]])
+#printable = user_item.loc[[405, 284]]
 #printable.to_csv("thetwochosen.csv", index = False)
 
 
