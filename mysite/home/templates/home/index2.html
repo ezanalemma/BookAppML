@@ -1,0 +1,28 @@
+{% extends "base_layout.html" %}
+
+{% block content %}
+		
+	 	{% load static %}
+		<p style="text-align:center">Your next book package is arriving June 1st!</p>
+		<div class="imgContainer">
+			<div>
+				<img src="{{theSrc}}"/>
+			</div>
+
+			<a href="{% url 'index2' %}" >
+				<div class="imgButton">
+	                <input type="button" class="button" value="Recommend New Book" >
+	            </div>
+	         </a>
+		
+			<!-- <div class="imgButton">
+                <input type="button" class="button" value="Cancel Subscription">
+            </div> -->
+ 		</div>
+{% endblock %}
+
+
+
+            
+
+            
