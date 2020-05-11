@@ -49,11 +49,28 @@ class Rating(models.Model):
 
 class Survey(models.Model):
     username = models.CharField(max_length=100)
-    genres = models.CharField(max_length = 100)
+    # genres = models.CharField(max_length = 100)
+    art =  models.IntegerField(default=2.5)
+    biography =  models.IntegerField(default=2.5)
+    business =  models.IntegerField(default=2.5)
+    classics =  models.IntegerField(default=2.5)
+    crime =  models.IntegerField(default=2.5)
+    fantasy =  models.IntegerField(default=2.5)
+    fiction =  models.IntegerField(default=2.5)
+    horror =  models.IntegerField(default=2.5)
+    humor =  models.IntegerField(default=2.5)
+    mystery =  models.IntegerField(default=2.5)
+    nonfiction =  models.IntegerField(default=2.5)
+    romance =  models.IntegerField(default=2.5)
+    suspense =  models.IntegerField(default=2.5)
+    sports =  models.IntegerField(default=2.5)
+    young_adult =  models.IntegerField(default=2.5)
+
     average_read_time = models.CharField(max_length=100)
     last_book = models.CharField(max_length=100)
     rating = models.CharField(max_length=100 )
     favorite_author = models.CharField(max_length=100)
+
     def __str__(self):
         return self.username
 

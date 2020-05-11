@@ -10,26 +10,6 @@ from .forms import SurveyForm
 from home.models import UserBook
 from .models import Choice, Question, Rating, Book, Survey, UserSurvey
 
-
-Choices=[
-    ("1", "Art"),
-    ("2", "Biography"),
-    ("3", "Business"),
-    ("4", "Classics"),
-    ("5", "Crime"),
-    ("6", "Fantasy"),
-    ("7", "Fiction"),
-    ("8", "Horror"),
-    ("9", "Humor"),
-    ("10", "Mystery"),
-    ("11", "Non-Fiction"),
-    ("12", "Romance"),
-    ("13", "Suspense"),
-    ("14", "Sports"),
-    ("15", "Young Adult")
-]
-
-
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
@@ -155,18 +135,42 @@ def get_survey(request):
         form = SurveyForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['user']
-            genres1 = form.cleaned_data['genres']
-
-            for choice in Choices:
-                if choice[0] == genres1:
-                    genres1 = choice[1]
+            art = form.cleaned_data['art']
+            bio = form.cleaned_data['bio']
+            business = form.cleaned_data['business']
+            classics = form.cleaned_data['classics']
+            crime = form.cleaned_data['crime']
+            fantasy = form.cleaned_data['fantasy']
+            fiction = form.cleaned_data['fiction']
+            horror = form.cleaned_data['horror']
+            humor = form.cleaned_data['humor']
+            mystery = form.cleaned_data['mystery']
+            nonfiction = form.cleaned_data['nonfiction']
+            romance = form.cleaned_data['romance']
+            suspense = form.cleaned_data['suspense']
+            sports = form.cleaned_data['sports']
+            young_adult = form.cleaned_data['young_adult']
 
             read_time = form.cleaned_data['average_read_time']
             book = form.cleaned_data['last_book']
             rate = form.cleaned_data['rating']
             fav_author = form.cleaned_data['favorite_author']
             survey = Survey.objects.create(username= name,
-                genres=genres1,
+                art=art,
+                biography=bio,
+                business=business,
+                classics=classics,
+                crime=crime,
+                fantasy=fantasy,
+                fiction=fiction,
+                horror=horror,
+                humor=humor,
+                mystery=mystery,
+                nonfiction=nonfiction,
+                romance=romance,
+                suspense=suspense,
+                sports=sports,
+                young_adult=young_adult,
                 average_read_time = read_time,
                 last_book = book,
                 rating = rate,
