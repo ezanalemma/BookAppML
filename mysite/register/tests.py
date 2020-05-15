@@ -15,6 +15,10 @@ class New_User_Form_Test(TestCase):
     		'username': 'testclient',
     		'email': 'user@user.com',
     		'library_card_number': 123456789,
+            'address_line_1': '1234 Hello St',
+            'city': 'Hayward',
+            'state': 'CA',
+            'postal_code': 123456,
     		'password1': 'test123456',
     		'password2': 'test123456',
     	}
@@ -27,6 +31,10 @@ class New_User_Form_Test(TestCase):
     		'username': 'testclient',
     		'email': 'user',
     		'library_card_number': 1234242342,
+            'address_line_1': '1234 Hello St',
+            'city': 'Hayward',
+            'state': 'CA',
+            'postal_code': 123456,
     		'password1': 'test',
     		'password2': 'test',
     	}
@@ -39,6 +47,10 @@ class New_User_Form_Test(TestCase):
             'username': 'testclient',
             'email': 'user@user.com',
             'library_card_number': 123456789,
+            'address_line_1': '1234 Hello St',
+            'city': 'Hayward',
+            'state': 'CA',
+            'postal_code': 123456,
             'password1': 'test123456',
             'password2': 'test123456',
         }
@@ -52,6 +64,10 @@ class Login_Test(TestCase):
 			'username': 'testclient',
     		'email': 'user@user.com',
     		'library_card_number': 123456789,
+            'address_line_1': '1234 Hello St',
+            'city': 'Hayward',
+            'state': 'CA',
+            'postal_code': 123456,
     		'password1': 'test123456',
     		'password2': 'test123456',
 		}
@@ -79,19 +95,30 @@ class TestSignup(TestCase):
         element3 = self.driver.find_element_by_id("id_library_card_number")
         element3.send_keys("123456789")
 
+        element4 = self.driver.find_element_by_id("id_address_line_1")
+        element4.send_keys("1234 Hello St")
+
+        element5 = self.driver.find_element_by_id("id_city")
+        element5.send_keys("Hayward")
+
+        element6 = self.driver.find_element_by_id("id_state")
+        element6.send_keys("CA")
+
+        element7 = self.driver.find_element_by_id("id_postal_code")
+        element7.send_keys("123456")
+
+
     def test_signup(self):
-        element4 = self.driver.find_element_by_id("id_password1")
-        element4.send_keys("selenium")
+        element8 = self.driver.find_element_by_id("id_password1")
+        element8.send_keys("selenium")
 
-        element5 = self.driver.find_element_by_id("id_password2")
-        element5.send_keys("selenium")
+        element9 = self.driver.find_element_by_id("id_password2")
+        element9.send_keys("selenium")
 
-        element6 = self.driver.find_element_by_id("btn")
-        element6.click()
+        element10 = self.driver.find_element_by_id("btn")
+        element10.click()
 
-        self.assertEquals(self.driver.current_url, "http://127.0.0.1:8000/home/")
-        element7 = self.driver.find_element_by_id("user")
-        self.assertEquals(element7.text, "testing123")
+        self.assertEquals(self.driver.current_url, "http://127.0.0.1:8000/survey/")
 
     def test_invalid_signup(self):
         element4 = self.driver.find_element_by_id("id_password1")
@@ -123,14 +150,27 @@ class TestLogin(TestCase):
 
         element3 = self.driver.find_element_by_id("id_library_card_number")
         element3.send_keys("123456789")
-        element4 = self.driver.find_element_by_id("id_password1")
-        element4.send_keys("selenium1")
 
-        element5 = self.driver.find_element_by_id("id_password2")
-        element5.send_keys("selenium1")
+        element4 = self.driver.find_element_by_id("id_address_line_1")
+        element4.send_keys("1234 Hello St")
 
-        element6 = self.driver.find_element_by_id("btn")
-        element6.click()
+        element5 = self.driver.find_element_by_id("id_city")
+        element5.send_keys("Hayward")
+
+        element6 = self.driver.find_element_by_id("id_state")
+        element6.send_keys("CA")
+
+        element7 = self.driver.find_element_by_id("id_postal_code")
+        element7.send_keys("123456")
+
+        element8 = self.driver.find_element_by_id("id_password1")
+        element8.send_keys("selenium1")
+
+        element9 = self.driver.find_element_by_id("id_password2")
+        element9.send_keys("selenium1")
+
+        element10 = self.driver.find_element_by_id("btn")
+        element10.click()
 
     def test_login_logout(self):
 

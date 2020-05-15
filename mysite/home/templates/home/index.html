@@ -5,14 +5,14 @@
 	 	{% load static %}
 		<p style="text-align:center">Your next book package is arriving June 1st!</p>
 		<div class="imgContainer">
-			<div>
+			<div id='image'>
 				<img src="{{theSrc}}"/>
 			</div>
 
 
 			<a href="{% url 'index2' %}" >
 				<div class="imgButton">
-	                <input type="button" class="button" value="Recommend New Book" >
+	                <input type="button" id = 'btn' class="button" value="Recommend New Book" >
 	            </div>
 	         </a>
 		
